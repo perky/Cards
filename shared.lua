@@ -23,7 +23,7 @@ function Shared:createCard( data )
 end
 
 function Shared:createChip( data )
-	local _chip = Chip.create( false, data.id, data[1], data[2], data[3] )
+	local _chip = Chip.create( false, data.id, data[1], data[2], data[3], data[4] )
 end
 
 function Shared:updateCard( data )

@@ -8,6 +8,7 @@ CanvasObject.drag = CanvasObject:addState('drag')
 CanvasObject.selected = CanvasObject:addState('selected')
 CanvasObject.selected.drag = CanvasObject:addState('selected drag',CanvasObject.selected)
 CanvasObject.hidden = CanvasObject:addState('hidden')
+CanvasObject.newid = newCounter()
 function CanvasObject:initialize( x,y,scale,rotation,image )
 	super.initialize(self)
 	self.x = x or 0

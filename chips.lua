@@ -13,9 +13,9 @@ function Chip.create( send, id, ... )
 	
 	if id and id > 0 then
 		_chip.id = id
-		card.newid = newCounter(id+1)
+		CanvasObject.newid = newCounter(id+1)
 	else
-		_chip.id = card.newid()
+		_chip.id = CanvasObject.newid()
 	end
 	
 	if send then

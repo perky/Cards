@@ -2,16 +2,15 @@
 -- CARD FUNCS
 ---------------
 card = class('card', CanvasObject)
-card.newid = newCounter()
 
 function card.create( send, id, ... )
 	local _card = card:new(...)
 	
 	if id and id > 0 then
 		_card.id = id
-		card.newid = newCounter(id+1)
+		CanvasObject.newid = newCounter(id+1)
 	else
-		_card.id = card.newid()
+		_card.id = CanvasObject.newid()
 	end
 	
 	if send then
@@ -21,9 +20,10 @@ function card.create( send, id, ... )
 	
 	return _card
 end
-function card:initialize( id, x, y, scale, rotation )
-	local image = cards[id].img
-	super.initialize(self, x, y, 0.5, 0, image)
+function card:initialize( id, x, y, scale, rotation, image )
+	local id = id or 1
+	self.image = image or cards[id].img
+	super.initialize(self, x, y, 0.5, 0, self.image)
 	
 	self.card_id = id
 	self.flipped = false
