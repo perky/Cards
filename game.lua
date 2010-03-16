@@ -225,7 +225,7 @@ function Game.startserver:enterState()
 	self.isServer = true
 	
 	-- Send your ip to the server list.
-	--http.request( self.settings.serverDatabase, 'mid=add' )
+	http.request( self.settings.serverDatabase, 'mid=add' )
 	super.enterState(self)
 	self.canvas:addMessage('Server initialized')
 end
@@ -242,7 +242,7 @@ function Game.startserver:keypressed(key,unicode)
 end
 function Game.startserver:quit()
 	-- Remove your ip from the list.
-	--http.request( self.settings.serverDatabase, 'mid=rem' )
+	http.request( self.settings.serverDatabase, 'mid=rem' )
 end
 
 -------------------------------------------------------------
