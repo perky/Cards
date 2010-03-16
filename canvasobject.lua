@@ -69,7 +69,7 @@ function CanvasObject:bringToTop( no_network )
 	if not no_network then game:updateCard( self ) end
 end
 function CanvasObject:updateSize()
-	if self.image then
+	if self.image and self.image.getWidth then
 		self.width = self.image:getWidth() * self.scale
 		self.height = self.image:getHeight() * self.scale
 	else
