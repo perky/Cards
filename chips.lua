@@ -2,8 +2,11 @@
 -- Author: Luke Perkin
 -- Date: 2010-03-16
 
-Chip = class('chip',card)
+Chip = class('chip',CanvasObject)
 Chip.image = {}
+Chip.image.black = love.graphics.newImage('Chips/chipblack.png')
+Chip.image.blue = love.graphics.newImage('Chips/chipblue.png')
+Chip.image.green = love.graphics.newImage('Chips/chipgreen.png')
 Chip.image.pink = love.graphics.newImage('Chips/chippink.png')
 function Chip.create( send, id, ... )
 	local _chip = Chip:new(...)
@@ -22,33 +25,19 @@ function Chip.create( send, id, ... )
 	
 	return _chip
 end
-function Chip:initialize(id,x,y)
-	super.initialize(self)
-	self.img = Chip.image.pink
-	self.card_id = 1
-	self.x = x or 0
-	self.y = y or 0
-	self.scale = scale or 1
-	self.rotation = rotation or 0
-	self.z = z or 0
-	self.inHand = false
-	self.alpha = 255
-	self:updateSize()
+function Chip:initialize(id,x,y,image)
+	self.image = image or Chip.image.black
+	super.initialize(self,x,y,1,0,self.image)
+	-- Needed to make the sort func work. I'll fix anothertime.
+	self.card_id = id
 end
 function Chip:draw()
 	love.graphics.setColor(255,255,255,255)
-	love.graphics.draw( self.img, self.x, self.y, 0, self.scale)
+	love.graphics.draw( self.image, self.x, self.y, 0, self.scale)
 end
-function Chip:updateSize()
-	local img = self.img
-	self.width = img:getWidth() * self.scale
-	self.height = img:getHeight() * self.scale
-end
-
-function Chip.selected:draw()
-	if not self.img then return end
-	love.graphics.setColor(0,0,0,150)
-	love.graphics.draw( self.img, self.x-2, self.y+2, 0, self.scale)
+function Chip.states.selected:draw()
+	love.graphics.setColor(150,150,150,100)
+	love.graphics.draw( self.image, self.x-2, self.y+2, 0, self.scale)
 	love.graphics.setColor(255,255,255,255)
-	love.graphics.draw( self.img, self.x, self.y, 0, self.scale)
+	love.graphics.draw( self.image, self.x, self.y, 0, self.scale)
 end

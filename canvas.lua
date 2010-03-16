@@ -56,9 +56,9 @@ function canvas:mousepressed(x,y,button)
 		end
 	end
 end
-function canvas:mousereleased(x,y,button)
+function canvas:mousereleased(x,y,button)	
 	if button == 'l' then
-		for i,v in ipairs(game.cardlist) do
+		for i,v in ipairs(CanvasObject.list) do
 			v:selectState(nil)
 		end
 		if self.lastMouseX then
@@ -70,7 +70,7 @@ function canvas:mousereleased(x,y,button)
 		end
 	elseif button == 'r' then
 		local a = true
-		for i,v in ipairs(game.cardlist) do
+		for i,v in ipairs(CanvasObject.list) do
 			if v:mouseOver(x,y) then a = false end
 		end
 		self:gotoState(nil)
@@ -99,7 +99,7 @@ function canvas:findCardsInRect( x1, y1, x2, y2 )
 	if y1 > y2 then y1,y2 = y2,y1 end
 	local pad = 10
 	self.foundCards = {}
-	for i,v in ipairs(game.cardlist) do
+	for i,v in ipairs(CanvasObject.list) do
 		local cx,cy,cx2,cy2 = v.x+pad, v.y+pad, v.x+v.width-pad, v.y+v.height-pad
 		if cx > x1 and cx2 < x2 and cy > y1 and cy2 < y2 and not v:inState('hidden') then
 			table.insert( self.foundCards, v )
@@ -165,7 +165,7 @@ end
 function canvas.lasso:mousereleased( x,y,button )
 	if button == 'l' then
 		self.foundCards = {}
-		for i,v in ipairs(game.cardlist) do
+		for i,v in ipairs(CanvasObject.list) do
 			if point_in_polygon( v.x, v.y, self._lasso ) then
 				table.insert( self.foundCards, v )
 				v:selectState('selected')
@@ -266,7 +266,7 @@ function canvas.menu:mousereleased(x,y,button)
 	goo.mousereleased(x,y,button)
 	--self.class.mousereleased(x,y,button)
 	self:gotoState(nil)
-	for i,v in ipairs(game.cardlist) do
+	for i,v in ipairs(CanvasObject.list) do
 		v:selectState(nil)
 	end
 end
@@ -301,7 +301,19 @@ function canvas.context:enterState()
 	
 	b[2] = Game.button:new( p, 0, 20, 'New chips.' )
 	b[2].mousepressed = function()
-		local _c = Chip.create( true, nil, 0, 10, 10 )
+		local _x = 100
+		for i=1,5 do
+			Chip.create( true, nil, 0, 50+_x, 10+(i-1)*20, Chip.image.black )
+		end
+		for i=1,5 do
+			Chip.create( true, nil, 0, 130+_x, 10+(i-1)*20, Chip.image.blue )
+		end
+		for i=1,5 do
+			Chip.create( true, nil, 0, 210+_x, 10+(i-1)*20, Chip.image.green )
+		end
+		for i=1,5 do
+			Chip.create( true, nil, 0, 290+_x, 10+(i-1)*20, Chip.image.pink )
+		end
 	end
 end
 function canvas.context:exitState()

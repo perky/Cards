@@ -225,7 +225,7 @@ function Game.startserver:enterState()
 	self.isServer = true
 	
 	-- Send your ip to the server list.
-	local data,c,h = http.request( self.settings.serverDatabase, 'mid=add' )
+	--http.request( self.settings.serverDatabase, 'mid=add' )
 	super.enterState(self)
 	self.canvas:addMessage('Server initialized')
 end
@@ -242,7 +242,7 @@ function Game.startserver:keypressed(key,unicode)
 end
 function Game.startserver:quit()
 	-- Remove your ip from the list.
-	http.request( self.settings.serverDatabase, 'mid=rem' )
+	--http.request( self.settings.serverDatabase, 'mid=rem' )
 end
 
 -------------------------------------------------------------
@@ -296,32 +296,33 @@ end
 function Play:enterState()
 	self.count = newCounter()
 	self.canvas = canvas:new()
-	self.cardlist = {}
 end
 function Play:update(dt)
-	for i,v in ipairs(self.cardlist) do
+	-- Update all objects on canvas.
+	for i,v in ipairs(CanvasObject.list) do
 		v:update(dt)
 	end
 	self.canvas:update(dt)
 end
 function Play:draw()
-	for i,v in ipairs(self.cardlist) do
+	-- Draw all objects on canvas.
+	for i,v in ipairs(CanvasObject.list) do
 		v:draw()
 	end
 	self.canvas:draw()
 end
 function Play:mousepressed( x, y, button )
-	for i=#self.cardlist,1,-1 do
-		if self.cardlist[i]:mouseOver(x,y) and not self.cardlist[i]:inState('hidden') then
-			self.cardlist[i]:mousepressed(x,y,button)
+	for i=#CanvasObject.list,1,-1 do
+		if CanvasObject.list[i]:mouseOver(x,y) and not CanvasObject.list[i]:inState('hidden') then
+			CanvasObject.list[i]:mousepressed(x,y,button)
 			return
 		end
 	end
 	self.canvas:mousepressed(x,y,button)
 end
 function Play:mousereleased( x, y, button )
-	for i=#self.cardlist,1,-1 do
-		self.cardlist[i]:mousereleased(x,y,button)
+	for i=#CanvasObject.list,1,-1 do
+		CanvasObject.list[i]:mousereleased(x,y,button)
 	end
 	self.canvas:mousereleased(x,y,button)
 end

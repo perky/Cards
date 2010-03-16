@@ -66,7 +66,7 @@ function Server:forwardData( data, client )
 end
 
 function Server:sendSnapshot( client )
-	for i,v in ipairs(game.cardlist) do
+	for i,v in ipairs(CanvasObject.list) do
 		local data = lube.bin:pack{ mid = 1, id = v.id, v.card_id, v.x, v.y }
 		self:send( data, client )
 		data = lube.bin:pack{ mid = 3, id = v.id, v.flipped }

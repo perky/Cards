@@ -14,6 +14,7 @@ function Shared:dataReceived( data, client )
 	elseif data.mid == 5 then self:destroyCard(data)
 	elseif data.mid == 6 then self:clientConnected(data)
 	elseif data.mid == 7 then self:clientDisconnected(data)
+	elseif data.mid == 8 then self:createChip(data)
 	end
 end
 
@@ -21,8 +22,12 @@ function Shared:createCard( data )
 	local _card = card.create( false, data.id, data[1], data[2], data[3] )
 end
 
+function Shared:createChip( data )
+	local _chip = Chip.create( false, data.id, data[1], data[2], data[3] )
+end
+
 function Shared:updateCard( data )
-	for i,v in ipairs(game.cardlist) do
+	for i,v in ipairs(CanvasObject.list) do
 		if v.id == data.id then
 			v:bringToTop(true)
 			local animx = goo.animation:new{
@@ -47,7 +52,7 @@ function Shared:updateCard( data )
 end
 
 function Shared:flipCard( data )
-	for i,v in ipairs(game.cardlist) do
+	for i,v in ipairs(CanvasObject.list) do
 		if v.id == data.id then
 			v.flipped = data[1]
 		end
@@ -55,7 +60,7 @@ function Shared:flipCard( data )
 end
 
 function Shared:hideCard( data )
-	for i,v in ipairs(game.cardlist) do
+	for i,v in ipairs(CanvasObject.list) do
 		if v.id == data.id then
 			if data[1] == true then
 				v:gotoState('hidden')
@@ -67,7 +72,7 @@ function Shared:hideCard( data )
 end
 
 function Shared:destroyCard( data )
-	for i,v in ipairs(game.cardlist) do
+	for i,v in ipairs(CanvasObject.list) do
 		if v.id == data.id then
 			v:destroy()
 		end
