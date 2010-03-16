@@ -26,7 +26,7 @@ function Chip.create( send, id, ... )
 	return _chip
 end
 function Chip:initialize(id,x,y,image)
-	self.image = image or Chip.image.black
+	self.image = Chip.image[image] or Chip.image.black
 	super.initialize(self,x,y,1,0,self.image)
 	-- Needed to make the sort func work. I'll fix anothertime.
 	self.card_id = id

@@ -303,16 +303,16 @@ function canvas.context:enterState()
 	b[2].mousepressed = function()
 		local _x = 100
 		for i=1,5 do
-			Chip.create( true, nil, 0, 50+_x, 10+(i-1)*20, Chip.image.black )
+			Chip.create( true, nil, 0, 50+_x, 10+(i-1)*20, 'black' )
 		end
 		for i=1,5 do
-			Chip.create( true, nil, 0, 130+_x, 10+(i-1)*20, Chip.image.blue )
+			Chip.create( true, nil, 0, 130+_x, 10+(i-1)*20, 'blue' )
 		end
 		for i=1,5 do
-			Chip.create( true, nil, 0, 210+_x, 10+(i-1)*20, Chip.image.green )
+			Chip.create( true, nil, 0, 210+_x, 10+(i-1)*20, 'green' )
 		end
 		for i=1,5 do
-			Chip.create( true, nil, 0, 290+_x, 10+(i-1)*20, Chip.image.pink )
+			Chip.create( true, nil, 0, 290+_x, 10+(i-1)*20, 'pink' )
 		end
 	end
 end
