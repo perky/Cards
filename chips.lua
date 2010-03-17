@@ -30,14 +30,15 @@ function Chip:initialize(id,x,y,image)
 	super.initialize(self,x,y,1,0,self.image)
 	-- Needed to make the sort func work. I'll fix anothertime.
 	self.card_id = id
+	self.alpha = 255
 end
 function Chip:draw()
-	love.graphics.setColor(255,255,255,255)
+	love.graphics.setColor(255,255,255,self.alpha)
 	love.graphics.draw( self.image, self.x, self.y, 0, self.scale)
 end
 function Chip.states.selected:draw()
 	love.graphics.setColor(150,150,150,100)
 	love.graphics.draw( self.image, self.x-2, self.y+2, 0, self.scale)
-	love.graphics.setColor(255,255,255,255)
+	love.graphics.setColor(255,255,255,self.alpha)
 	love.graphics.draw( self.image, self.x, self.y, 0, self.scale)
 end
