@@ -4,10 +4,10 @@
 
 Chip = class('chip',CanvasObject)
 Chip.image = {}
-Chip.image.black = love.graphics.newImage('Chips/chipblack.png')
-Chip.image.blue = love.graphics.newImage('Chips/chipblue.png')
-Chip.image.green = love.graphics.newImage('Chips/chipgreen.png')
-Chip.image.pink = love.graphics.newImage('Chips/chippink.png')
+Chip.image.black = love.graphics.newImage('chips/chipblack.png')
+Chip.image.blue = love.graphics.newImage('chips/chipblue.png')
+Chip.image.green = love.graphics.newImage('chips/chipgreen.png')
+Chip.image.pink = love.graphics.newImage('chips/chippink.png')
 function Chip.create( send, id, ... )
 	local _chip = Chip:new(...)
 	
