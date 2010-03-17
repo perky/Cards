@@ -23,7 +23,6 @@ require 'canvas'
 -- LOVE FUNCS
 ---------------
 function love.load()
-	love.graphics.setMode( 1024, 768 )
 	love.graphics.setFont(24)
 	love.graphics.setLine( 1, 'smooth' )
 	love.graphics.setPoint( 1, 'smooth' )

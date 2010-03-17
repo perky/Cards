@@ -263,6 +263,10 @@ end
 ------ START SERVER.
 -------------------------------------------------------------
 function Game.startserver:enterState()
+	-- Let the user know what we are doing.
+	love.graphics.print("Creating server...", 50, 50)
+	love.graphics.present()
+	
 	self.server = Server:new( self.settings.port, self.settings.socketType, self.settings.handshake )
 	--self.client = Client:new( self.settings.host, self.settings.port, self.settings.socketType, true, self.settings.handshake)
 	self.netObj = self.server
@@ -285,6 +289,12 @@ function Game.startserver:keypressed(key,unicode)
 	super.keypressed(self,key,unicode)
 end
 function Game.startserver:quit()
+	-- Let the user know we are quitting.
+	love.graphics.clear()
+	love.graphics.setColor(0,0,0,100)
+	love.graphics.print("Closing server...", 50, 50)
+	love.graphics.present()
+	
 	-- Remove your ip from the list.
 	http.request( self.settings.serverDatabase, 'mid=rem' )
 end

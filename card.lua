@@ -30,7 +30,11 @@ function card:initialize( id, x, y, scale, rotation, image )
 	self.alpha = 255
 end
 function card:draw()
-	love.graphics.setColor(0,0,0,self.alpha)
+	if self.inHand then
+		love.graphics.setColor(0,0,255,self.alpha)
+	else
+		love.graphics.setColor(0,0,0,self.alpha)
+	end
 	love.graphics.rectangle( 'fill', self.x-3, self.y-3, self.width+6, self.height+6)
 	love.graphics.setColor(255,255,255,self.alpha)
 	if self.flipped then

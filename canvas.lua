@@ -91,7 +91,7 @@ function canvas:stackCards( list )
 	_y = _y / #list
 	for i,v in ipairs(list) do
 		v.x = _x + (i*4) - 17
-		v.y = _y + (i*4) - 17
+		v.y = _y
 	end
 end
 function canvas:findCardsInRect( x1, y1, x2, y2 )
@@ -183,9 +183,17 @@ end
 function canvas.menu:enterState()
 	goo.objects = {}
 	self.buttons = {}
+	
+	-- Check mouse postions and change to a readable position.
+	local mx,my = love.mouse.getX(), love.mouse.getY()
+	if mx > love.graphics.getWidth() - 100 then mx = love.graphics.getWidth() - 100 end
+	if mx < 10 then mx = 10 end
+	if my > love.graphics.getHeight() - 200 then my = love.graphics.getHeight() - 200 end
+	if my < 10 then my = 10 end
+	
 	local b = self.buttons
 	local p = goo.null:new()
-	p:setPos( love.mouse.getX(), love.mouse.getY() )
+	p:setPos( mx, my )
 	
 	b[1] = Game.button:new( p, 0, 0, 'Pile.' )
 	b[1].mousepressed = function()
@@ -293,7 +301,7 @@ function canvas.context:enterState()
 			tbl[i],tbl[_r] = tbl[_r],tbl[i]
 		end
 		for i=1,52 do
-			_c = card.create( true, nil, tbl[i], 10, 10+(i*4) )
+			_c = card.create( true, nil, tbl[i], 10+(i*4), 10 )
 			_c.flipped = true
 			game:flipCard( _c )
 		end
@@ -301,18 +309,18 @@ function canvas.context:enterState()
 	
 	b[2] = Game.button:new( p, 0, 20, 'New chips.' )
 	b[2].mousepressed = function()
-		local _x = 100
+		local _x = 0
 		for i=1,5 do
-			Chip.create( true, nil, 0, 50+_x, 10+(i-1)*20, 'black' )
+			Chip.create( true, nil, 0, 50+_x, 200+(i-1)*20, 'black' )
 		end
 		for i=1,5 do
-			Chip.create( true, nil, 0, 130+_x, 10+(i-1)*20, 'blue' )
+			Chip.create( true, nil, 0, 130+_x, 200+(i-1)*20, 'blue' )
 		end
 		for i=1,5 do
-			Chip.create( true, nil, 0, 210+_x, 10+(i-1)*20, 'green' )
+			Chip.create( true, nil, 0, 210+_x, 200+(i-1)*20, 'green' )
 		end
 		for i=1,5 do
-			Chip.create( true, nil, 0, 290+_x, 10+(i-1)*20, 'pink' )
+			Chip.create( true, nil, 0, 290+_x, 200+(i-1)*20, 'pink' )
 		end
 	end
 end
