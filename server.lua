@@ -23,9 +23,10 @@ end
 
 function Server:dataReceived( data, client )
 	-- Peform shared networking functions.
-	Shared:dataReceived( data, client )
-	-- Forward data to other clients.
-	if data then self:forwardData( data, client ) end
+	if Shared:dataReceived( data, client ) then
+		-- Forward data to other clients.
+		if data then self:forwardData( data, client ) end
+	end
 end
 
 function Server:clientConnected( client )

@@ -163,11 +163,64 @@ end
 ------ SERVER BROWSER.
 -------------------------------------------------------------
 function Game.serverbrowser:enterState()
+	-- Let the use know something is loading.
+	self.infotext = goo.text:new()
+	self.infotext:setText("Loading list of servers...")
+	self.infotext:setPos(50,50)
+	self.infotext.color = {0,0,0,255}
+	self:draw()
+	love.graphics.present()
+	
+	-- Create socket for ping.
+	self.sock = lube.client( 'udp' )
+	self.sock:setCallback( self.serverbrowser.dataRecieved )
+	
+	-- Get a saved list of servers.
 	local data,c,h = http.request( Game.settings.serverDatabase, 'mid=get' )
 	self.serverList = explode(',',data)
 	self.serverButton = {}
+	
+	-- Ping each server to check it's online.
+	for i,v in ipairs(self.serverList) do
+		self.sock:connect( v, self.settings.port )
+		self.sock:send( lube.bin:pack{ mid=9, v } )
+	end
+	self.serverList2 = {}
+	self.timer = 0
+	self.timeout = 5
+end
+function Game.serverbrowser:update(dt)
+	goo.update(dt)
+	if self.timer and self.timer < self.timeout then
+		self.timer = self.timer + dt
+		self.sock:update(dt)
+	elseif self.timer then
+		self.timer = false
+		self:buildList()
+	end
+end
+function Game.serverbrowser:draw()
+	goo.draw()
+end
+function Game.serverbrowser:mousereleased(x,y,button)
+	goo.mousereleased(x,y,button)
+end
+function Game.serverbrowser.dataRecieved( lubeobj, data )
+	print(data)
+	if data then
+		-- The server exists.
+		print('server exists ', data)
+		table.insert(game.serverList2, data)
+	else
+		print('server does not exist')
+	end
+end
+function Game.serverbrowser:buildList()
+	self.infotext:destroy()
+	
 	local frame = goo.null:new()
 	frame:setPos(50,50)
+	
 	-- Add localhost for LAN.
 	local b = Game.button:new( frame, -500, 0, 'LAN' )
 	b.onClick = function ()
@@ -186,7 +239,7 @@ function Game.serverbrowser:enterState()
 	b.anim:play()
 	table.insert( self.serverButton, b )
 	-- Add all other servers.
-	for i,v in ipairs( self.serverList ) do
+	for i,v in ipairs( game.serverList2 ) do
 		local b = Game.button:new( frame, -500, i*55, v )
 		b.onClick = function ()
 			self.settings.host = v
@@ -204,15 +257,6 @@ function Game.serverbrowser:enterState()
 		b.anim:play()
 		table.insert( self.serverButton, b )
 	end
-end
-function Game.serverbrowser:update(dt)
-	goo.update(dt)
-end
-function Game.serverbrowser:draw()
-	goo.draw()
-end
-function Game.serverbrowser:mousereleased(x,y,button)
-	goo.mousereleased(x,y,button)
 end
 
 -------------------------------------------------------------

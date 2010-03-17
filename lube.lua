@@ -538,19 +538,28 @@ function lube.server:update(dt)
 				return self.connectcallback(self.parent, index)
 			end
 		elseif data == self.ping.msg then
+			print('data1')
 			return
 		elseif data == self.s_discover and self.sbrowser then
+			print('data2')
 			self.conn:sendto(self.s_identify, ip, port)
 			return
 		elseif data == self.s_poll and self.sbrowser then
+			print('data3')
 			self.conn:sendto(string.format(self.s_info .. ":%s:%s:", self.s_table.name or "UnnamedServer", self.s_table.version or "NoVersion"), ip, port)
 			return
 		elseif data == self.s_mastercheck and self.sbrowser then
+			print('data4')
 			self.conn:sendto(self.s_mastercheckpass, ip, port)
+			return
+		elseif index == 0 then
+			local d = lube.bin:unpack(data)
+			self.socket:sendto(d[1],ip,port)
 			return
 		end
 		self.recvcallback(self.parent, data, index)
 		data, ip, port = self:receive()
+		
 	end
 	self:checkPing(dt)
 end

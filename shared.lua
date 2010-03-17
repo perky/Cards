@@ -4,17 +4,17 @@
 
 Shared = {}
 function Shared:dataReceived( data, client )
-	print('data:',data,client)
 	data = lube.bin:unpack(data)
 	-- Perform functions based on Message ID (mid).
-		if data.mid == 1 then self:createCard(data)
-	elseif data.mid == 2 then self:updateCard(data)
-	elseif data.mid == 3 then self:flipCard(data)
-	elseif data.mid == 4 then self:hideCard(data)
-	elseif data.mid == 5 then self:destroyCard(data)
-	elseif data.mid == 6 then self:clientConnected(data)
-	elseif data.mid == 7 then self:clientDisconnected(data)
-	elseif data.mid == 8 then self:createChip(data)
+		if data.mid == 1 then self:createCard(data)			return true
+	elseif data.mid == 2 then self:updateCard(data)			return true
+	elseif data.mid == 3 then self:flipCard(data)			return true
+	elseif data.mid == 4 then self:hideCard(data)			return true
+	elseif data.mid == 5 then self:destroyCard(data)		return true
+	elseif data.mid == 6 then self:clientConnected(data)	return true
+	elseif data.mid == 7 then self:clientDisconnected(data) return true
+	elseif data.mid == 8 then self:createChip(data) 		return true
+	--elseif data.mid == 9 then self:returnPing(data,client) 	return false
 	end
 end
 
