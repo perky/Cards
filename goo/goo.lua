@@ -4,8 +4,6 @@
 
 -- Initialization
 goo = {}
-require 'MiddleClass'
-require 'MindState'
 require 'goo.animation.animation'
 
 goo.skin = 'goo/skins/default/'
